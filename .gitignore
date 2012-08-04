@@ -10,3 +10,10 @@
 *.lai
 *.la
 *.a
+
+moc_*
+*.moc
+/lib
+/bin
+*.pro.user*
+Makefile*
