@@ -54,7 +54,7 @@ void Get::execute()
     socket->writeDatagram(datagram, QHostAddress(peer), 161);
 }
 
-QStringList Get::getResponse() const
+Response Get::getResponse() const
 {
     return response;
 }
@@ -81,21 +81,14 @@ void Get::readPendingDatagram()
 
         QStringList responses;
         VarbindList *varbindList = sequence.getProtocolDataUnit()->getVarbindList();
-        foreach (Varbind *varbind, varbindList->getVarbinds()) {
+        for (Varbind *varbind : varbindList->getVarbinds()) {
             responses += QString("%1 = %2 : %3")
                     .arg(varbind->getObjectIdentifier()->toString())
                     .arg(DataTypeFactory::getTypeName(varbind->getValue()->getType()))
                     .arg(varbind->getValue()->toString());
 
-            response.append(varbind->getValue()->toString());
+            AbstractSyntaxNotationOne *value = varbind->getValue();
+            response.add(value->getType(), value->toString());
         }
-
-        qDebug() << QString("SNMP datagram has been read!\n"
-                            "Version: %1\n"
-                            "Community: %2\n"
-                            "Responses: %3")
-                    .arg(sequence.getSnmpVersion()->getVersion() + 1)
-                    .arg(sequence.getCommunity()->getValue())
-                    .arg(responses.join("\n"));
     }
 }

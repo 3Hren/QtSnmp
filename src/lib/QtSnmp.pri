@@ -18,7 +18,8 @@ HEADERS += \
     Types/GetResponsePDU.h \
     Expections/SnmpException.h \
     Types/NullObject.h \
-    Get.h
+    Get.h \
+    Response.h
 
 SOURCES += \
     Types/AbstractSyntaxNotationOne.cpp \
@@ -36,4 +37,5 @@ SOURCES += \
     Types/DataTypeFactory.cpp \
     Types/GetResponsePDU.cpp \
     Types/NullObject.cpp \
-    Get.cpp
+    Get.cpp \
+    Response.cpp
