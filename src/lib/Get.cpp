@@ -81,7 +81,7 @@ void Get::readPendingDatagram()
 
         QStringList responses;
         VarbindList *varbindList = sequence.getProtocolDataUnit()->getVarbindList();
-        foreach (Varbind *varbind, varbindList->getVarbinds()) {
+        for (Varbind *varbind : varbindList->getVarbinds()) {
             responses += QString("%1 = %2 : %3")
                     .arg(varbind->getObjectIdentifier()->toString())
                     .arg(DataTypeFactory::getTypeName(varbind->getValue()->getType()))

@@ -32,44 +32,36 @@ QString Integer::toString() const
 
 quint8 Integer::getDataLength() const
 {
-    int value = this->value;
-    int valueSize = 0;
+    qint32 value = this->value;
+    int mask = 0x01ff << ((8 * 3) - 1);
 
-    do {
-        value >>= 7;
-        valueSize++;
-    } while (value != 0);
+    int intSize = 4;
+    while ((((value & mask) == 0) || ((value & mask) == mask)) && intSize > 1) {
+        intSize--;
+        value <<= 8;
+    }
 
-    return valueSize;
+    return intSize;
 }
 
 QByteArray Integer::encodeData() const
-{    
-    QByteArray code;
-
-    int integer = value;
+{
+    qint32 value = this->value;
     int mask;
-    int intsize = 4;
+    int intSize = 4;
 
-    /*
-     * Truncate "unnecessary" bytes off of the most significant end of this
-     * 2's complement integer.  There should be no sequence of 9
-     * consecutive 1's or 0's at the most significant end of the
-     * integer.
-     */
-    mask = 0x1FF << ((8 * 3) - 1);
-    /* mask is 0xFF800000 on a big-endian machine */
-    while ((((integer & mask) == 0) || ((integer & mask) == mask))
-          && intsize > 1){
-        intsize--;
-        integer <<= 8;
+    mask = 0x01ff << ((8 * 3) - 1);
+    while ((((value & mask) == 0) || ((value & mask) == mask)) && intSize > 1) {
+        intSize--;
+        value <<= 8;
     }
-    //encodeHeader(os, type, intsize);
-    mask = 0xFF << (8 * 3);
-    /* mask is 0xFF000000 on a big-endian machine */
-    while ((intsize--) > 0){
-        code.append(((integer & mask) >> (8 * 3)));
-        integer <<= 8;
+
+    mask = 0xff << (8 * 3);
+
+    QByteArray code;
+    while ((intSize--) > 0) {
+        code.append(((value & mask) >> (8 * 3)));
+        value <<= 8;
     }
 
     return code;
