@@ -20,6 +20,12 @@ Sequence::Sequence(const SequenceData &sequenceData, QObject *parent) :
         data->setParent(this);
 }
 
+void Sequence::addSequenceData(AbstractSyntaxNotationOne *data)
+{
+    data->setParent(this);
+    sequenceData.append(data);
+}
+
 SequenceData Sequence::getSequenceData() const
 {
     return sequenceData;

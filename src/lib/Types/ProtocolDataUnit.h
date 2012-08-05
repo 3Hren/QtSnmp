@@ -7,19 +7,20 @@ class VarbindList;
 // #NOTE: True, but it would be ideally if Sequence be parent class.
 class ProtocolDataUnit : public AbstractSyntaxNotationOne
 {
-    Q_OBJECT
-    Integer *requestId;
-    Integer *error;
-    Integer *errorIndex;
-    VarbindList *varbindList;
+    Q_OBJECT    
 public:
     ProtocolDataUnit(Type::AbstractSyntaxNotationOneType type, QObject *parent = 0);
-    ProtocolDataUnit(Type::AbstractSyntaxNotationOneType type, Integer *requestId, Integer *error, Integer *errorIndex, VarbindList *varbindList);
 
     Integer *getRequestId() const;
     Integer *getError() const;
     Integer *getErrorIndex() const;
     VarbindList *getVarbindList() const;
+
+protected:
+    Integer *requestId;
+    Integer *error;
+    Integer *errorIndex;
+    VarbindList *varbindList;
 
 private:
     quint8 getDataLength() const;
