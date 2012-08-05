@@ -12,6 +12,7 @@ public:
     explicit Sequence(QObject *parent = 0);
     Sequence(const SequenceData &sequenceData, QObject *parent = 0);
 
+    void addSequenceData(AbstractSyntaxNotationOne *data);
     SequenceData getSequenceData() const;
 
 protected:

@@ -14,19 +14,6 @@ ProtocolDataUnit::ProtocolDataUnit(Type::AbstractSyntaxNotationOneType type, QOb
 {
 }
 
-ProtocolDataUnit::ProtocolDataUnit(Type::AbstractSyntaxNotationOneType type, Integer *requestId, Integer *error, Integer *errorIndex, VarbindList *varbindList) : // #TODO: Make enum for "type"
-    AbstractSyntaxNotationOne(type),
-    requestId(requestId),
-    error(error),
-    errorIndex(errorIndex),
-    varbindList(varbindList)
-{
-    requestId->setParent(this);
-    error->setParent(this);
-    errorIndex->setParent(this);
-    varbindList->setParent(this);
-}
-
 Integer *ProtocolDataUnit::getRequestId() const
 {
     return requestId;

@@ -12,6 +12,7 @@ public:
     Integer(qint32 value, QObject *parent = 0);
 
     qint32 getValue() const;
+    void setValue(qint32 value);
 
     QString toString() const;
 

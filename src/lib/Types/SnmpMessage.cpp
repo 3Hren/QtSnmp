@@ -20,8 +20,11 @@ SnmpMessage::SnmpMessage(QObject *parent) :
 }
 
 SnmpMessage::SnmpMessage(SnmpVersion *version, OctetString *community, ProtocolDataUnit *protocolDataUnit, QObject *parent) :
-    Sequence(SequenceData{version, community, protocolDataUnit}, parent)
+    Sequence(parent)
 {
+    addSequenceData(version);
+    addSequenceData(community);
+    addSequenceData(protocolDataUnit);
 }
 
 SnmpVersion *SnmpMessage::getSnmpVersion() const

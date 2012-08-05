@@ -25,6 +25,11 @@ qint32 Integer::getValue() const
     return value;
 }
 
+void Integer::setValue(qint32 value)
+{
+    this->value = value;
+}
+
 QString Integer::toString() const
 {
     return QString::number(value);

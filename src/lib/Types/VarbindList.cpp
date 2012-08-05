@@ -1,15 +1,18 @@
 #include "VarbindList.h"
 
 #include "Varbind.h"
+#include "ObjectIdentifier.h"
 
 VarbindList::VarbindList(QObject *parent) :
     Sequence(parent)
 {
 }
 
-VarbindList::VarbindList(const SequenceData &sequenceData, QObject *parent) :
-    Sequence(sequenceData, parent)
+void VarbindList::addVarbind(const QString &objectIdentifierString, AbstractSyntaxNotationOne *value)
 {
+    ObjectIdentifier *objectIdentifier = new ObjectIdentifier(objectIdentifierString);
+    Varbind *varbind = new Varbind(objectIdentifier, value);
+    addSequenceData(varbind);
 }
 
 QList<Varbind *> VarbindList::getVarbinds() const

@@ -10,7 +10,7 @@ class VarbindList : public Sequence
     Q_OBJECT
 public:
     explicit VarbindList(QObject *parent = 0);
-    VarbindList(const SequenceData &sequenceData, QObject *parent = 0);
 
+    void addVarbind(const QString &objectIdentifierString, AbstractSyntaxNotationOne *value);
     QList<Varbind *> getVarbinds() const;
 };

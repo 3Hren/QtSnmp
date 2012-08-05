@@ -32,14 +32,8 @@ Get::Get(const QString &peer, const QString &objectId, const QString &communityS
     connect(socket,SIGNAL(readyRead()),SLOT(readPendingDatagram()));
 
     SnmpVersion *version = new SnmpVersion(SnmpVersion::SNMPv1);
-    OctetString *community = new OctetString(communityString);
-    Integer *requestId = new Integer(1);
-    Integer *error = new Integer(0);
-    Integer *errorIndex = new Integer(0);
-    ObjectIdentifier *objectIdentifier = new ObjectIdentifier(objectId);
-    AbstractSyntaxNotationOne *value = new Null();
-    VarbindList *varbindList = new VarbindList(SequenceData{new Varbind(objectIdentifier, value)});
-    ProtocolDataUnit *getRequestPDU = new GetRequestPDU(requestId, error, errorIndex, varbindList);
+    OctetString *community = new OctetString(communityString);    
+    ProtocolDataUnit *getRequestPDU = new GetRequestPDU(objectId);
     message = new SnmpMessage(version, community, getRequestPDU, this);
 }
 
