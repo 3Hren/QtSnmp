@@ -4,6 +4,7 @@
 
 
 #include "Types/Integer.h"
+#include "Response.h"
 
 #include "Get.h"
 
@@ -71,7 +72,10 @@ void QtSnmpLibTest::synchronousGet()
     get.execute();
     QTest::qWait(100);
 
-    QVERIFY(get.getResponse().contains(expected));
+    Response response = get.getResponse();
+    QCOMPARE(response.getTypes().count(), 1);
+    QCOMPARE(response.getType(0), Type::OctetString);
+    QVERIFY(response.getValues(Type::OctetString).contains(expected));
 }
 
 QTEST_MAIN(QtSnmpLibTest)

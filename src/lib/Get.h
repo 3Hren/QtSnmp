@@ -3,6 +3,8 @@
 #include <QObject>
 #include <QStringList>
 
+#include "Response.h"
+
 class QUdpSocket;
 class Get : public QObject
 {
@@ -13,13 +15,13 @@ class Get : public QObject
 
     QUdpSocket *socket;
 
-    QStringList response;
+    Response response;
 public:
     Get(const QString &peer, const QString &objectId, QObject *parent = 0);
 
     void execute();
 
-    QStringList getResponse() const;
+    Response getResponse() const;
 
 private Q_SLOTS:
     void readPendingDatagram();

@@ -9,7 +9,7 @@ class Sequence : public AbstractSyntaxNotationOne
     Q_OBJECT
     SequenceData sequenceData;
 public:
-    Sequence(QObject *parent = 0);
+    explicit Sequence(QObject *parent = 0);
     Sequence(const SequenceData &sequenceData, QObject *parent = 0);
 
     SequenceData getSequenceData() const;

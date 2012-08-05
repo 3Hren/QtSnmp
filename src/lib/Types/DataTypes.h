@@ -18,6 +18,8 @@ enum AbstractSyntaxNotationOneType {
 };
 }
 
+typedef Type::AbstractSyntaxNotationOneType ASNType;
+
 inline QDataStream &operator >>(QDataStream &inputStream, Type::AbstractSyntaxNotationOneType &type) {
     quint8 byte = 0;
     inputStream >> byte;
