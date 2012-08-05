@@ -19,7 +19,8 @@ HEADERS += \
     Expections/SnmpException.h \
     Types/NullObject.h \
     Get.h \
-    Response.h
+    Response.h \
+    Status.h
 
 SOURCES += \
     Types/AbstractSyntaxNotationOne.cpp \
@@ -38,4 +39,5 @@ SOURCES += \
     Types/GetResponsePDU.cpp \
     Types/NullObject.cpp \
     Get.cpp \
-    Response.cpp
+    Response.cpp \
+    Status.cpp

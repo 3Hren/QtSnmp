@@ -88,9 +88,7 @@ QByteArray ObjectIdentifier::encodeData() const
         }
 
         code.append(result);
-    }
-
-    qDebug() << "Object Identifier Data" << code.toHex().constData();
+    }    
 
     return code;
 }

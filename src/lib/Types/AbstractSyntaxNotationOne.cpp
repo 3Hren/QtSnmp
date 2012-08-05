@@ -9,7 +9,7 @@
 static const quint8 TYPE_SIZE = 1;
 static const quint8 LENGTH_SIZE = 1;
 
-AbstractSyntaxNotationOne::AbstractSyntaxNotationOne(Type::AbstractSyntaxNotationOneType type, QObject *parent) :
+AbstractSyntaxNotationOne::AbstractSyntaxNotationOne(ASNType type, QObject *parent) :
     QObject(parent),
     type(type)
 {
@@ -31,9 +31,7 @@ int AbstractSyntaxNotationOne::decode(QDataStream &inputStream)
 {
     quint8 dataLength = 0;
     inputStream >> dataLength;
-    qDebug() << "Start decoding:" << this;
     decodeData(inputStream, dataLength);
-    qDebug() << "Decoded:" << this;
     return LENGTH_SIZE + dataLength;
 }
 

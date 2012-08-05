@@ -23,40 +23,47 @@
 #include <QDebug>
 #endif
 
-Get::Get(const QString &peer, const QString &objectId, QObject *parent) :
-    QObject(parent),
+Get::Get(const QString &peer, const QString &objectId, const QString &communityString, QObject *parent) :
+    QObject(parent),    
     peer(peer),
-    objectId(objectId),
     socket(new QUdpSocket(this))
 {    
     socket->bind(10500);
     connect(socket,SIGNAL(readyRead()),SLOT(readPendingDatagram()));
 
-}
-
-void Get::execute()
-{
     SnmpVersion *version = new SnmpVersion(SnmpVersion::SNMPv1);
-    OctetString *community = new OctetString("public"); //#TODO: Make configurable.
-
+    OctetString *community = new OctetString(communityString);
     Integer *requestId = new Integer(1);
     Integer *error = new Integer(0);
     Integer *errorIndex = new Integer(0);
-
     ObjectIdentifier *objectIdentifier = new ObjectIdentifier(objectId);
     AbstractSyntaxNotationOne *value = new Null();
     VarbindList *varbindList = new VarbindList(SequenceData{new Varbind(objectIdentifier, value)});
-
     ProtocolDataUnit *getRequestPDU = new GetRequestPDU(requestId, error, errorIndex, varbindList);
+    message = new SnmpMessage(version, community, getRequestPDU, this);
+}
 
-    SnmpMessage snmpMessage(version, community, getRequestPDU);
-    QByteArray datagram = snmpMessage.encode();
+void Get::setTimeout(int msec)
+{
+}
+
+void Get::setRetryCount(int retries)
+{
+}
+
+void Get::execute()
+{        
+    QByteArray datagram = message->encode();
     socket->writeDatagram(datagram, QHostAddress(peer), 161);
 }
 
 Response Get::getResponse() const
 {
     return response;
+}
+
+Status Get::getStatus() const
+{
 }
 
 void Get::readPendingDatagram()

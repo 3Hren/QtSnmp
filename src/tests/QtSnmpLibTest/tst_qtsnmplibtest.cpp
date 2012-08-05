@@ -5,7 +5,7 @@
 
 #include "Types/Integer.h"
 #include "Response.h"
-
+#include "Status.h"
 #include "Get.h"
 
 class QtSnmpLibTest : public QObject
@@ -21,6 +21,9 @@ private Q_SLOTS:
 
     void synchronousGet_data();
     void synchronousGet();
+
+    void synchronousGetNoResponseFromPeerError();
+    void synchronousGetObjectIdError();
 };
 
 QtSnmpLibTest::QtSnmpLibTest()
@@ -59,7 +62,7 @@ void QtSnmpLibTest::synchronousGet_data()
     QTest::addColumn<QString>("objectId");
     QTest::addColumn<QString>("expected");
 
-    QTest::newRow("Simple get") << "127.0.0.1" << ".1.3.6.1.2.1.1.4.0" << "Me <me@example.org>";
+    QTest::newRow("Contact Get Request") << "127.0.0.1" << ".1.3.6.1.2.1.1.4.0" << "Me <me@example.org>";
 }
 
 void QtSnmpLibTest::synchronousGet()
@@ -76,6 +79,24 @@ void QtSnmpLibTest::synchronousGet()
     QCOMPARE(response.getTypes().count(), 1);
     QCOMPARE(response.getType(0), Type::OctetString);
     QVERIFY(response.getValues(Type::OctetString).contains(expected));
+}
+
+void QtSnmpLibTest::synchronousGetNoResponseFromPeerError()
+{
+    QString peer("127.0.0.2");
+    QString objectId(".1.3.6.1.2.1.1.4.0");
+    Get get(peer, objectId);
+    get.setTimeout(90);
+    get.setRetryCount(1);
+    get.execute();
+    QTest::qWait(100);
+
+    Status status = get.getStatus();
+    QCOMPARE(status.getType(), Status::NoResponseFromPeer);
+}
+
+void QtSnmpLibTest::synchronousGetObjectIdError()
+{
 }
 
 QTEST_MAIN(QtSnmpLibTest)
