@@ -13,7 +13,7 @@ class AbstractSyntaxNotationOne : public QObject
     Q_OBJECT
     Type::AbstractSyntaxNotationOneType type;
 public:
-    AbstractSyntaxNotationOne(Type::AbstractSyntaxNotationOneType type, QObject *parent = 0);        
+    AbstractSyntaxNotationOne(ASNType type, QObject *parent = 0);
 
     QByteArray encode() const;
     int decode(QDataStream &inputStream);
