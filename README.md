@@ -4,7 +4,7 @@ QtSnmp. WARNING! This is test readme for myself!
 SNMP implementation for Qt framework with signal/slot support
 ---
 Why I decided to work on this:
-- Because I looked for light-weight implementation of SNMP with asynchronous requests/responses and haven't found it
+- Because I looked for light-weight implementation of SNMP with asynchronous requests/responses and haven't found it.
 
 Usage
 ---
